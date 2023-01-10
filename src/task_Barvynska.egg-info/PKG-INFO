@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: task-Barvynska
+Version: 0.0.29
+Summary: The application is to read data from 2 files, order racers by time and print report that shows the top 15 racers and the rest after underline
+Author-email: SashaBarvynska <analitik.1.peo.partner@gmail.com>
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.10.4
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# Task 6 - Report of Monaco 2018 Racing
+
