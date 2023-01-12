@@ -4,3 +4,5 @@ ignore=
     E501,
     #imported but unused
     F401,
+    #module level import not at top of file
+    E402

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=43.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "task_Barvynska"
+version = "0.0.30"
+authors = [
+  { name="SashaBarvynska", email="analitik.1.peo.partner@gmail.com" },
+]
+description = "The application is to read data from 2 files, order racers by time and print report that shows the top 15 racers and the rest after underline"
+readme = "README.md"
+requires-python = ">=3.10.4"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[task_Barvynska.urls]
+
+"Homepage" = "https://git.foxminded.com.ua/foxstudent103119/task-6-report-of-monaco-2018-racing"
