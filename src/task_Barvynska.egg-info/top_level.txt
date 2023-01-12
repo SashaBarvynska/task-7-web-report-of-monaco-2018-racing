@@ -1,6 +1,0 @@
-__init__
-app
-controller
-routes
-task_Barvynska
-templates

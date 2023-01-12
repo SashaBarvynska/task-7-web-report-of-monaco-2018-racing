@@ -8,3 +8,7 @@ def get_drivers():
         FormatFile.format_file_time(Files.open_files(file_start)),
         FormatFile.format_file_time(Files.open_files(file_end)),)
     return list_drivers
+
+
+def get_driver(abbr):
+    return list(filter(lambda x: x.abbreviation == abbr, get_drivers()))[0]

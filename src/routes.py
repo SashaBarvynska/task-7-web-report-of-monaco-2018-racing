@@ -1,7 +1,7 @@
 from flask import render_template, request
 
 from src.app import app
-from src.controller import get_drivers
+from src.controller import get_drivers, get_driver
 from src.task_Barvynska import Drivers
 
 
@@ -17,6 +17,6 @@ def show_drivers():
     abbr = request.args.get('driver_id')
     list_drivers = get_drivers()
     if abbr:
-        driver = list(filter(lambda x: x.abbreviation == abbr, list_drivers))[0]
+        driver = get_driver(abbr)
         return render_template('driver_info.html', data=driver)
     return render_template('drivers.html', data=list_drivers)
