@@ -1,8 +1,8 @@
-from flask import render_template, request
+from flask import redirect, render_template, request
+from task_Barvynska import Drivers
 
 from src.app import app
-from src.controller import get_drivers, get_driver
-from src.task_Barvynska import Drivers
+from src.controller import get_driver, get_drivers
 
 
 @app.route('/report', methods=['GET'])
@@ -14,9 +14,12 @@ def show_report():
 
 @app.route('/report/drivers', methods=['GET'])
 def show_drivers():
-    abbr = request.args.get('driver_id')
     list_drivers = get_drivers()
-    if abbr:
-        driver = get_driver(abbr)
-        return render_template('driver_info.html', data=driver)
     return render_template('drivers.html', data=list_drivers)
+
+
+@app.route('/report/drivers/<driver_code>', methods=['GET'])
+def get_info(driver_code):
+    list_drivers = get_drivers()
+    driver = get_driver(list_drivers, 'abbreviation', driver_code)
+    return render_template('driver_info.html', data=driver)

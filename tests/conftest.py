@@ -1,59 +1,21 @@
-import random
-from datetime import datetime, timedelta
+import os
 
-from src.task_Barvynska.drivers import Driver
+import pytest
 
-from tests.constants import ABBR, CARS, DRIVER_NAMES
-
-
-def generate_random_driver(speed=None) -> Driver:
-    driver = f'{random.choice(DRIVER_NAMES)} - {random.randint(1, 100)}'
-    car = random.choice(CARS)
-    abbr = random.choice(ABBR)
-    now = datetime.now()
-    time_now = str(now)[11:-3]
-    end_time = now + timedelta(seconds=random.randint(0, 120))
-    time_end = str(end_time)[11:-3]
-    driver = Driver(abbr, driver, car, time_now, time_end)
-    if speed:
-        driver.speed = speed
-    else:
-        driver.set_speed()
-    return driver
+from src.app import get_app
 
 
-def convert_driver_to_file_row(drivers: list[Driver], file: str) -> str:
-    if file == "abb":
-        return "\n".join(
-            [
-                f"{driver.abbreviation}_{driver.driver}_{driver.car}"
-                for driver in drivers
-            ]
-        )
-    elif file == "start":
-        return "\n".join(
-            [
-                f"{driver.abbreviation}2018-05-24_{driver.start_time}"
-                for driver in drivers
-            ]
-        )
-    elif file == "end":
-        return "\n".join(
-            [f"{driver.abbreviation}2018-05-24_{driver.end_time}" for driver in drivers]
-        )
-    else:
-        return ""
+@pytest.fixture()
+def app():
+    app = get_app()
+    app.config.update({
+        "TESTING": True,
+    })
+    os.environ["FOLDER_FILES"] = 'tests/test_data_files'
+    yield app
+    os.environ["FOLDER_FILES"] = ''
 
 
-def convert_driver_to_file_dict(drivers: list[Driver], file: str) -> dict:
-    drivers_dict = {}
-    for driver in drivers:
-        if file == "abb":
-            drivers_dict.update(
-                {driver.abbreviation: {"driver": driver.driver, "car": driver.car}}
-            )
-        elif file == "start":
-            drivers_dict.update({driver.abbreviation: driver.start_time})
-        elif file == "end":
-            drivers_dict.update({driver.abbreviation: driver.end_time})
-    return drivers_dict
+@pytest.fixture()
+def client(app):
+    return app.test_client()

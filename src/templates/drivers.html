@@ -18,7 +18,7 @@ table, th, td {
     {% for driver in data %}
     <tr>
         <td>{{ driver.driver }}</td>
-        <td><a href="/report/drivers?driver_id={{driver.abbreviation}}" > {{ driver.abbreviation }} </a></td>
+        <td><a href="/report/drivers/{{driver.abbreviation}}" > {{ driver.abbreviation }} </a></td>
     </tr>
 {%endfor%}
 
