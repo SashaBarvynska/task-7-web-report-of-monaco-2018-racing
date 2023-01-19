@@ -1,21 +1,17 @@
-import os
 
 import pytest
 
-from src.app import get_app
+from main import app as flask_app
 
 
-@pytest.fixture()
+@pytest.fixture(scope="module")
 def app():
-    app = get_app()
-    app.config.update({
+    flask_app.config.update({
         "TESTING": True,
     })
-    os.environ["FOLDER_FILES"] = 'tests/test_data_files'
-    yield app
-    os.environ["FOLDER_FILES"] = ''
+    yield flask_app
 
 
-@pytest.fixture()
+@pytest.fixture(scope="module")
 def client(app):
     return app.test_client()

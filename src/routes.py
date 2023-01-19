@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request
+from flask import render_template, request
 from task_Barvynska import Drivers
 
 from src.app import app

@@ -1,8 +1,10 @@
-import pytest
-from task_Barvynska import Driver
+from unittest.mock import patch
 
-from src.controller import get_driver
-from tests.constants import LIST_DRIVERS
+import pytest
+
+from src.controller import get_driver, get_drivers
+from tests.constants import (DICT_ABB, DICT_TIME, DRIVER_DRR, DRIVER_SVF,
+                             LIST_DRIVERS)
 
 
 @pytest.mark.parametrize("drivers,key,value,expected", [
@@ -10,14 +12,40 @@ from tests.constants import LIST_DRIVERS
         LIST_DRIVERS,
         "abbreviation",
         "DRR",
-        Driver("DRR", "Daniel Ricciardo", "RED BULL RACING TAG HEUER", "12:14:12.054", "12:11:24.067", "57:12.013")
+        DRIVER_DRR
     ),
     (
         LIST_DRIVERS,
         "driver",
         "Sebastian Vettel",
-        Driver("SVF", "Sebastian Vettel", "FERRARI", "12:02:58.917", "12:04:03.332", "1:04.415")
+        DRIVER_SVF
     ),
 ])
 def test_get_driver(drivers, key, value, expected):
     assert get_driver(drivers, key, value) == expected
+
+
+@patch(
+    "task_Barvynska.files.Files.find_files",
+    return_value=["path_1", "path_2", "path_3"],
+)
+@patch(
+    "task_Barvynska.files.Files.open_files",
+    return_value="file_content",
+)
+@patch(
+    "task_Barvynska.format_file.FormatFile.format_file_abbreviation_data",
+    return_value=DICT_ABB,
+)
+@patch(
+    "task_Barvynska.format_file.FormatFile.format_file_time",
+    return_value=DICT_TIME,
+)
+@patch("task_Barvynska.drivers.Drivers.build_report", return_value=LIST_DRIVERS)
+def test_get_drivers(mock_build_report, mock_format_file_time, mock_format_file_abbreviation_data, mock_open_files, mock_find_files):
+    assert get_drivers() == LIST_DRIVERS
+    mock_build_report.assert_called_with(DICT_ABB, DICT_TIME, DICT_TIME)
+    mock_format_file_time.assert_called_with("file_content")
+    mock_format_file_abbreviation_data.assert_called_with("file_content")
+    mock_open_files.assert_called_with("path_2")
+    mock_find_files.assert_called_with("data_files")
