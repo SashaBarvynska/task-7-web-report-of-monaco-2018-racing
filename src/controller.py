@@ -1,10 +1,10 @@
 from task_Barvynska import Driver, Drivers, Files, FormatFile
 
-from config import FOLDER_FILES
+from config import Config
 
 
 def get_drivers() -> list[Driver]:
-    file_start, file_end, abbreviations_file = Files.find_files(FOLDER_FILES)
+    file_start, file_end, abbreviations_file = Files.find_files(Config.FOLDER_FILES)
     list_drivers = Drivers.build_report(
         FormatFile.format_file_abbreviation_data(Files.open_files(abbreviations_file)),
         FormatFile.format_file_time(Files.open_files(file_start)),

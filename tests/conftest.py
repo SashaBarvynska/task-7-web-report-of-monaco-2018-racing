@@ -1,14 +1,12 @@
-
 import pytest
 
+from config import TestConfig
 from main import app as flask_app
 
 
 @pytest.fixture(scope="module")
 def app():
-    flask_app.config.update({
-        "TESTING": True,
-    })
+    flask_app.config.from_object(TestConfig)
     yield flask_app
 
 

@@ -1,4 +1,10 @@
 import os
 
-FOLDER_FILES = os.environ.get('FOLDER_FILES') or 'data_files'
-debug = True
+
+class Config:
+    FOLDER_FILES = os.environ.get('FOLDER_FILES', 'data_files')
+    debug = os.environ.get('debug', True)
+
+
+class TestConfig(Config):
+    TESTING = os.environ.get('TESTING', True)

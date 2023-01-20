@@ -4,7 +4,4 @@ ignore=
     E501,
     #imported but unused
     F401,
-    #module level import not at top of file
-    E402
-    #continuation line over-indented for hanging indent
-    E126
+
