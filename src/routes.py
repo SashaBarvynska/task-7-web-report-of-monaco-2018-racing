@@ -5,6 +5,7 @@ from src.app import app
 from src.controller import get_driver, get_drivers
 
 
+@app.route('/', methods=['GET'])
 @app.route('/report', methods=['GET'])
 def show_report():
     list_drivers = get_drivers()

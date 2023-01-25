@@ -1,4 +1,4 @@
--i https://pypi.python.org/simple/
+-i https://testpypi.python.org/pypi
 Flask==2.2.2
 isort==5.11.4
 Jinja2==3.1.2
