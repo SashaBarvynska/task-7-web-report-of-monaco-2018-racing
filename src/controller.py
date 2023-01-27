@@ -12,5 +12,12 @@ def get_drivers() -> list[Driver]:
     return list_drivers
 
 
-def get_driver(drivers: list[Driver], key: str, value) -> list[Driver]:
-    return [driver_object for driver_object in drivers if getattr(driver_object, key) == value][0]
+class DriverAdaptor:
+    def __init__(self):
+        self.list_drivers = get_drivers()
+
+    def sort_data(self, order):
+        return Drivers.sort_data(self.list_drivers, order)
+
+    def get_driver(self, key: str, value) -> list[Driver]:
+        return [driver_object for driver_object in self.list_drivers if getattr(driver_object, key) == value][0]

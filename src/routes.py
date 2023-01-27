@@ -1,26 +1,25 @@
 from flask import render_template, request
-from task_Barvynska import Drivers
 
 from src.app import app
-from src.controller import get_driver, get_drivers
+from src.controller import DriverAdaptor
 
 
 @app.route('/', methods=['GET'])
 @app.route('/report', methods=['GET'])
 def show_report():
-    list_drivers = get_drivers()
-    list_driver_sorted = Drivers.sort_data(list_drivers, request.args.get('order') == "desc")
-    return render_template('report.html', data=list_driver_sorted)
+    instance = DriverAdaptor()
+    sorted_data = instance.sort_data(request.args.get('order') == "desc")
+    return render_template('report.html', data=sorted_data)
 
 
 @app.route('/report/drivers', methods=['GET'])
 def show_drivers():
-    list_drivers = get_drivers()
-    return render_template('drivers.html', data=list_drivers)
+    instance = DriverAdaptor()
+    return render_template('drivers.html', data=instance.list_drivers)
 
 
 @app.route('/report/drivers/<driver_code>', methods=['GET'])
 def get_info(driver_code):
-    list_drivers = get_drivers()
-    driver = get_driver(list_drivers, 'abbreviation', driver_code)
+    instance = DriverAdaptor()
+    driver = instance.get_driver('abbreviation', driver_code)
     return render_template('driver_info.html', data=driver)

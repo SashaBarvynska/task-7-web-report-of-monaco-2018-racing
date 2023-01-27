@@ -2,27 +2,26 @@ from unittest.mock import patch
 
 import pytest
 
-from src.controller import get_driver, get_drivers
+from src.controller import DriverAdaptor
 from tests.constants import (DICT_ABB, DICT_TIME, DRIVER_DRR, DRIVER_SVF,
                              LIST_DRIVERS)
 
 
-@pytest.mark.parametrize("drivers,key,value,expected", [
+@pytest.mark.parametrize("key,value,expected", [
     (
-        LIST_DRIVERS,
         "abbreviation",
         "DRR",
         DRIVER_DRR
     ),
     (
-        LIST_DRIVERS,
         "driver",
         "Sebastian Vettel",
         DRIVER_SVF
     ),
 ])
-def test_get_driver(drivers, key, value, expected):
-    assert get_driver(drivers, key, value) == expected
+def test_get_driver(key, value, expected):
+    instance = DriverAdaptor()
+    assert instance.get_driver(key, value) == expected
 
 
 @patch(
@@ -43,7 +42,8 @@ def test_get_driver(drivers, key, value, expected):
 )
 @patch("task_Barvynska.drivers.Drivers.build_report", return_value=LIST_DRIVERS)
 def test_get_drivers(mock_build_report, mock_format_file_time, mock_format_file_abbreviation_data, mock_open_files, mock_find_files):
-    assert get_drivers() == LIST_DRIVERS
+    instance = DriverAdaptor()
+    assert instance.list_drivers == LIST_DRIVERS
     mock_build_report.assert_called_with(DICT_ABB, DICT_TIME, DICT_TIME)
     mock_format_file_time.assert_called_with("file_content")
     mock_format_file_abbreviation_data.assert_called_with("file_content")
