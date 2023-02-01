@@ -20,7 +20,7 @@ table, th, td {
     <button onclick="window.location.reload()" style="margin-left: 10px;">filter</button>
     
 </div>
-<button onclick="window.location.href='http://127.0.0.1:5000/report/drivers'">go to list of drivers</button>
+<button onclick="window.location.href='http:/report/drivers'">go to list of drivers</button>
 <table style="width:100%">
     <tr>
         <th style="background-color:rgb(183, 182, 182);">Place</th>
@@ -59,7 +59,7 @@ table, th, td {
 </body>
 <script>
     function sort(e){
-        window.history.pushState({}, null, 'http://127.0.0.1:5000/report?order=' + e.value);
+        window.history.pushState({}, null, 'http:/report?order=' + e.value);
     }
 </script>
 

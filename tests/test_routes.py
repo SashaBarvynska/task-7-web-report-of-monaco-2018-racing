@@ -1,30 +1,28 @@
 from unittest.mock import patch
 
+import pytest
 from flask import Response
 
-from tests.constants import DRIVER_DRR, LIST_DRIVERS, LIST_DRIVERS_SORTED
+from tests.constants import ASC_SVF, DESC_SVF, DRIVER_DRR, DRR
 
 
-@patch("src.routes.DriverAdaptor.sort_data", return_value=LIST_DRIVERS_SORTED)
-def test_show_report_asc(mock_sort_data, client):
-    response: Response = client.get("/report?order=asc")
-    assert "FERRARI" in response.data.decode()
+@pytest.mark.parametrize("order, sort", [
+    (
+        "desc", DESC_SVF
+    ),
+    (
+        "asc", ASC_SVF
+    ),
+    ])
+def test_show_report(order, sort, client):
+    response: Response = client.get(f"/report?order={order}")
+    assert sort in response.data.decode()
     assert response.status_code == 200
-    mock_sort_data.assert_called_with(False)
 
 
-@patch("src.routes.DriverAdaptor.sort_data", return_value=LIST_DRIVERS_SORTED)
-def test_show_report_desc(mock_sort_data, client):
-    response: Response = client.get("/report?order=desc")
-    assert "FERRARI" in response.data.decode()
-    assert response.status_code == 200
-    mock_sort_data.assert_called_with(True)
-
-
-@patch("src.routes", return_value=LIST_DRIVERS)
-def test_show_drivers(mocker_get_drivers, client):
+def test_show_drivers(client):
     response: Response = client.get("/report/drivers")
-    assert "Romain Grosjean" in response.data.decode()
+    assert DRR in response.data.decode()
     assert response.status_code == 200
 
 

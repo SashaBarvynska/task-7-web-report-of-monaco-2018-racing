@@ -1,4 +1,4 @@
-import src.routes
+import src.routes  # NOQA
 from config import Config
 from src.app import app
 

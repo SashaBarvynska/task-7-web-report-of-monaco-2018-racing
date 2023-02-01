@@ -4,7 +4,8 @@ import pytest
 
 from src.controller import DriverAdaptor
 from tests.constants import (DICT_ABB, DICT_TIME, DRIVER_DRR, DRIVER_SVF,
-                             LIST_DRIVERS)
+                             LIST_DRIVERS, lIST_ALL_DRIVERS_ASC,
+                             lIST_ALL_DRIVERS_DESC)
 
 
 @pytest.mark.parametrize("key,value,expected", [
@@ -49,3 +50,18 @@ def test_get_drivers(mock_build_report, mock_format_file_time, mock_format_file_
     mock_format_file_abbreviation_data.assert_called_with("file_content")
     mock_open_files.assert_called_with("path_2")
     mock_find_files.assert_called_with("data_files")
+
+
+@pytest.mark.parametrize("test_input,expected", [
+    (
+        True,
+        lIST_ALL_DRIVERS_ASC
+    ),
+    (
+        False,
+        lIST_ALL_DRIVERS_DESC
+    ),
+])
+def test_sort_data(test_input, expected):
+    instance = DriverAdaptor()
+    assert instance.sort_data(test_input) == expected

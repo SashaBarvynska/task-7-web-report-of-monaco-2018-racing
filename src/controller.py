@@ -8,7 +8,8 @@ def get_drivers() -> list[Driver]:
     list_drivers = Drivers.build_report(
         FormatFile.format_file_abbreviation_data(Files.open_files(abbreviations_file)),
         FormatFile.format_file_time(Files.open_files(file_start)),
-        FormatFile.format_file_time(Files.open_files(file_end)),)
+        FormatFile.format_file_time(Files.open_files(file_end)),
+        )
     return list_drivers
 
 
@@ -16,8 +17,8 @@ class DriverAdaptor:
     def __init__(self):
         self.list_drivers = get_drivers()
 
-    def sort_data(self, order):
+    def sort_data(self, order: bool) -> list[Driver]:
         return Drivers.sort_data(self.list_drivers, order)
 
-    def get_driver(self, key: str, value) -> list[Driver]:
+    def get_driver(self, key: str, value) -> Driver:
         return [driver_object for driver_object in self.list_drivers if getattr(driver_object, key) == value][0]
