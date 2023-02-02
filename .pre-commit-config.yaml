@@ -1,6 +1,21 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+    -   id: check-yaml
+    -   id: end-of-file-fixer
 -   repo: local
     hooks:
     -   id: flake8
-    hooks:
+        name: flake files
+        entry: flake8
+        language: python
+        pass_filenames: false
+        files: \.py$
+        additional_dependencies: ['toml', 'flake8-comprehensions', 'flake8-rst-docstrings']
     -   id: isort
+        name: Sorting import statements
+        entry: isort
+        language: python
+        args: ["--filter-files"]
         files: \.py$
