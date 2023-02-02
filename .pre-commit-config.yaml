@@ -8,11 +8,9 @@ repos:
     hooks:
     -   id: flake8
         name: flake files
-        entry: flake8
+        entry: flake8 src/ tests/
         language: python
-        pass_filenames: false
         files: \.py$
-        additional_dependencies: ['toml', 'flake8-comprehensions', 'flake8-rst-docstrings']
     -   id: isort
         name: Sorting import statements
         entry: isort
