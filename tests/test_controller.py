@@ -44,11 +44,11 @@ def test_get_driver(mock_get_drivers, key, value, expected):
     return_value=DICT_TIME,
 )
 @patch("src.controller.Drivers.build_report", return_value=LIST_DRIVERS)
-def test_get_drivers(mock_build_report, mock_format_file_time, mock_format_file_abbreviation_data, mock_open_files, mock_find_files):
+def test_get_drivers(mock_build_report, mock_format_file_time, mock_format_file_abbr, mock_open_files, mock_find_files):
     assert get_drivers() == LIST_DRIVERS
     mock_find_files.assert_called_with("data_files")
     mock_open_files.assert_called_with("path_2")
-    mock_format_file_abbreviation_data.assert_called_with("file_content")
+    mock_format_file_abbr.assert_called_with("file_content")
     mock_format_file_time.assert_called_with("file_content")
     mock_build_report.assert_called_with(DICT_ABB, DICT_TIME, DICT_TIME)
 
